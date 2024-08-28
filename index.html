@@ -7,11 +7,11 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Alinha o texto e o botão à esquerda */
-            padding: 20px;
-            margin: 0;
+            margin: 20px;
+        }
+        .info-container {
+            display: inline-block; /* Mantém o conteúdo alinhado à esquerda */
+            margin-bottom: 10px; /* Adiciona um pequeno espaço abaixo do texto */
         }
         .btn {
             padding: 8px 16px;
@@ -29,8 +29,10 @@
     </style>
 </head>
 <body>
-    <p id="info"></p>
-    <button class="btn" onclick="copiarParaAreaTransferencia('info')">Copiar Texto</button>
+    <div class="info-container">
+        <p id="info"></p>
+        <button class="btn" onclick="copiarParaAreaTransferencia('info')">Copiar</button>
+    </div>
 
     <script>
         // Função para obter parâmetros da URL
@@ -42,7 +44,7 @@
 
         // Função para preencher o conteúdo com os parâmetros da URL
         function preencherInformacao() {
-            const valor = getParameterByName('param');
+            const valor = getParameterByName('texto');
             if (valor) {
                 document.getElementById('info').textContent = valor;
             }
