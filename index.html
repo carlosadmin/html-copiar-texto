@@ -22,9 +22,13 @@
             cursor: pointer;
             font-size: 1rem;
             margin-top: 10px; /* Adiciona um pouco de espaço entre o texto e o botão */
+            transition: background-color 0.2s ease; /* Transição suave para a mudança de cor */
+        }
+        .btn:active {
+            background-color: #5a6268; /* Cor mais escura quando o botão é clicado */
         }
         .btn:hover {
-            background-color: #5a6268;
+            background-color: #5a6268; /* Cor mais escura quando o botão é sobreposto */
         }
     </style>
 </head>
@@ -60,7 +64,7 @@
 
             try {
                 document.execCommand('copy');
-                alert('Conteúdo copiado: ' + elemento.textContent);
+                // Sem alerta, apenas a mudança de cor do botão
             } catch (err) {
                 console.error('Falha ao copiar: ', err);
             }
