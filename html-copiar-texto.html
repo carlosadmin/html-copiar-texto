@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copiar Variável</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .info {
+            margin-bottom: 20px;
+        }
+        .info p {
+            margin: 0 0 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .btn {
+            padding: 5px 10px;
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 5px;
+            font-size: 0.875rem;
+        }
+        .btn:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Informação</h1>
+        <div class="info">
+            <p id="info"></p>
+            <button class="btn" onclick="copiarParaAreaTransferencia('info')">Copiar Informação</button>
+        </div>
+    </div>
+    <script>
+        // Função para obter parâmetros da URL
+        function getParameterByName(name) {
+            const regex = new RegExp(`[?&]${name}=([^&]*)`);
+            const results = regex.exec(window.location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Função para preencher o conteúdo com os parâmetros da URL
+        function preencherInformacao() {
+            const valor = getParameterByName('param');
+
+            if (valor) {
+                document.getElementById('info').textContent = valor;
+            }
+        }
+
+        // Função para copiar o conteúdo para a área de transferência
+        function copiarParaAreaTransferencia(id) {
+            const elemento = document.getElementById(id);
+            const range = document.createRange();
+            range.selectNode(elemento);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
+            try {
+                document.execCommand('copy');
+                alert('Conteúdo copiado: ' + elemento.textContent);
+            } catch (err) {
+                console.error('Falha ao copiar: ', err);
+            }
+
+            window.getSelection().removeAllRanges();
+        }
+
+        // Preencher a informação quando a página carregar
+        document.addEventListener('DOMContentLoaded', preencherInformacao);
+    </script>
+</body>
+</html>
