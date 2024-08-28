@@ -3,38 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Copiar Variável</title>
+    <title>Copiar Texto</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .info {
-            margin-bottom: 20px;
-        }
-        .info p {
-            margin: 0 0 5px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
         .btn {
-            padding: 5px 10px;
+            padding: 8px 16px;
             background-color: #6c757d;
             color: #fff;
             border: none;
             border-radius: 3px;
             cursor: pointer;
-            margin-top: 5px;
-            font-size: 0.875rem;
+            font-size: 1rem;
+            margin-top: 10px;
         }
         .btn:hover {
             background-color: #5a6268;
@@ -42,13 +30,9 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Informação</h1>
-        <div class="info">
-            <p id="info"></p>
-            <button class="btn" onclick="copiarParaAreaTransferencia('info')">Copiar Informação</button>
-        </div>
-    </div>
+    <p id="info"></p>
+    <button class="btn" onclick="copiarParaAreaTransferencia('info')">Copiar Texto</button>
+
     <script>
         // Função para obter parâmetros da URL
         function getParameterByName(name) {
@@ -60,7 +44,6 @@
         // Função para preencher o conteúdo com os parâmetros da URL
         function preencherInformacao() {
             const valor = getParameterByName('param');
-
             if (valor) {
                 document.getElementById('info').textContent = valor;
             }
