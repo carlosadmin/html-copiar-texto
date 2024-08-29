@@ -37,16 +37,31 @@
 </head>
 <body>
     <!-- Primeiro texto -->
-    <p class="texto1">Este é o primeiro texto.</p>
+    <p class="texto1" id="texto1">Este é o primeiro texto.</p>
 
     <!-- Segundo texto em negrito -->
-    <p class="texto2">Este é o segundo texto em negrito e com fonte maior.</p>
+    <p class="texto2" id="texto2">Este é o segundo texto em negrito e com fonte maior.</p>
 
     <!-- Botão Copiar -->
     <button class="btn" id="copiar-btn">Copiar</button>
 
     <script>
-        // Função para copiar o conteúdo do segundo texto ao clicar no botão
+        // Função para obter parâmetros da URL
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name) || '';
+        }
+
+        // Preencher os textos com base nos parâmetros da URL
+        function preencherTextos() {
+            const texto1Param = getParameterByName('texto1');
+            const texto2Param = getParameterByName('texto2');
+
+            if (texto1Param) document.getElementById('texto1').textContent = texto1Param;
+            if (texto2Param) document.getElementById('texto2').textContent = texto2Param;
+        }
+
+        // Copiar o conteúdo do segundo texto ao clicar no botão
         document.getElementById('copiar-btn').addEventListener('click', function() {
             const texto2 = document.querySelector('.texto2').textContent;
             navigator.clipboard.writeText(texto2).then(() => {
@@ -59,6 +74,9 @@
                 console.error('Falha ao copiar: ', err);
             });
         });
+
+        // Preencher os textos ao carregar a página
+        document.addEventListener('DOMContentLoaded', preencherTextos);
     </script>
 </body>
 </html>
