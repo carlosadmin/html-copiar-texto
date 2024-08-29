@@ -7,98 +7,59 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 20px 0; /* Remove margens laterais e mantém apenas margens superior e inferior */
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+
+        .texto1 {
+            margin-bottom: 20px; /* Espaço entre o primeiro texto e o próximo elemento */
         }
-        .info {
-            margin-bottom: 20px;
+
+        .texto2 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 30px; /* Espaço entre o botão copiar e o segundo texto */
         }
-        .info p {
-            margin: 0;
-        }
-        .info #info1 {
-            margin-bottom: 20px; /* Espaço entre o texto 1 e o texto 2 */
-        }
-        .info #info2 {
-            font-size: 1.2rem; /* Texto um pouco maior */
-            font-weight: bold; /* Texto em negrito */
-        }
+
         .btn {
-            display: inline-block; /* Botão ao lado do texto */
-            margin-top: 10px; /* Espaço entre o texto em negrito e o botão */
             padding: 5px 10px;
-            background-color: #6c757d;
+            background-color: #007bff;
             color: #fff;
             border: none;
             border-radius: 3px;
             cursor: pointer;
-            font-size: 0.875rem;
+            font-size: 1em;
+            margin-top: 10px; /* Espaço entre o botão e o primeiro texto */
         }
-        .btn:hover {
-            background-color: #5a6268; /* Cor ao passar o mouse */
+
+        .btn:active {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="info">
-            <p id="info1"></p>
-        </div>
-        <div class="info">
-            <p id="info2"></p>
-            <button class="btn" id="copyBtn" onclick="copiarParaAreaTransferencia('info2')">Copiar</button>
-        </div>
-    </div>
+    <!-- Primeiro texto -->
+    <p class="texto1">Este é o primeiro texto.</p>
+
+    <!-- Botão Copiar -->
+    <button class="btn" id="copiar-btn">Copiar</button>
+
+    <!-- Segundo texto em negrito -->
+    <p class="texto2">Este é o segundo texto em negrito e com fonte maior.</p>
+
     <script>
-        // Função para obter parâmetros da URL
-        function getParameterByName(name) {
-            const regex = new RegExp(`[?&]${name}=([^&]*)`);
-            const results = regex.exec(window.location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
-
-        // Função para preencher o conteúdo com os parâmetros da URL
-        function preencherInformacoes() {
-            const informacoes = {
-                'info1': getParameterByName('texto1'),
-                'info2': getParameterByName('texto2')
-            };
-
-            for (const [id, valor] of Object.entries(informacoes)) {
-                if (valor) {
-                    document.getElementById(id).textContent = valor;
-                }
-            }
-        }
-
-        // Função para copiar o conteúdo para a área de transferência
-        function copiarParaAreaTransferencia(id) {
-            const elemento = document.getElementById(id);
-            const range = document.createRange();
-            range.selectNode(elemento);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-
-            try {
-                document.execCommand('copy');
-                const button = document.getElementById('copyBtn');
-                button.textContent = 'Copiado';
+        // Função para copiar o conteúdo do segundo texto ao clicar no botão
+        document.getElementById('copiar-btn').addEventListener('click', function() {
+            const texto2 = document.querySelector('.texto2').textContent;
+            navigator.clipboard.writeText(texto2).then(() => {
+                const btn = document.getElementById('copiar-btn');
+                btn.textContent = 'Copiado';
                 setTimeout(() => {
-                    button.textContent = 'Copiar';
-                }, 3000); // Muda o texto de volta após 3 segundos
-            } catch (err) {
+                    btn.textContent = 'Copiar';
+                }, 3000);
+            }).catch(err => {
                 console.error('Falha ao copiar: ', err);
-            }
-
-            window.getSelection().removeAllRanges();
-        }
-
-        // Preencher as informações quando a página carregar
-        document.addEventListener('DOMContentLoaded', preencherInformacoes);
+            });
+        });
     </script>
 </body>
 </html>
