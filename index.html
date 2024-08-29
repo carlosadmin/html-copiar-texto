@@ -13,6 +13,13 @@
             display: inline-block; /* Mantém o conteúdo alinhado à esquerda */
             margin-bottom: 10px; /* Adiciona um pequeno espaço abaixo do texto */
         }
+        .info {
+            margin-bottom: 10px;
+        }
+        .texto2 {
+            font-size: 1.25rem; /* Fonte um pouco maior */
+            font-weight: bold; /* Texto em negrito */
+        }
         .btn {
             padding: 8px 16px;
             background-color: #6c757d; /* Cor original do botão */
@@ -34,8 +41,13 @@
 </head>
 <body>
     <div class="info-container">
-        <p id="info"></p>
-        <button class="btn" onclick="copiarParaAreaTransferencia('info')">Copiar</button>
+        <div class="info">
+            <p id="info1"></p>
+            <button class="btn" onclick="copiarParaAreaTransferencia('info2')">Copiar</button>
+        </div>
+        <div class="info">
+            <p id="info2" class="texto2"></p>
+        </div>
     </div>
 
     <script>
@@ -47,14 +59,18 @@
         }
 
         // Função para preencher o conteúdo com os parâmetros da URL
-        function preencherInformacao() {
-            const valor = getParameterByName('texto');
-            if (valor) {
-                document.getElementById('info').textContent = valor;
+        function preencherInformacoes() {
+            const valor1 = getParameterByName('texto1');
+            const valor2 = getParameterByName('texto2');
+            if (valor1) {
+                document.getElementById('info1').textContent = valor1;
+            }
+            if (valor2) {
+                document.getElementById('info2').textContent = valor2;
             }
         }
 
-        // Função para copiar o conteúdo para a área de transferência
+        // Função para copiar o conteúdo do segundo texto para a área de transferência
         function copiarParaAreaTransferencia(id) {
             const elemento = document.getElementById(id);
             const range = document.createRange();
@@ -74,7 +90,7 @@
                 setTimeout(() => {
                     btn.classList.remove('clicked');
                     btn.textContent = 'Copiar';
-                }, 3000); // Tempo para exibir "Copiado" (3 segundos)
+                }, 2000); // Tempo para exibir "Copiado" (2 segundos)
                 
             } catch (err) {
                 console.error('Falha ao copiar: ', err);
@@ -83,8 +99,8 @@
             window.getSelection().removeAllRanges();
         }
 
-        // Preencher a informação quando a página carregar
-        document.addEventListener('DOMContentLoaded', preencherInformacao);
+        // Preencher as informações quando a página carregar
+        document.addEventListener('DOMContentLoaded', preencherInformacoes);
     </script>
 </body>
 </html>
