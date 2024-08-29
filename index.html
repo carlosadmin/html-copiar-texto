@@ -22,17 +22,13 @@
             cursor: pointer;
             font-size: 1rem;
             margin-top: 10px; /* Adiciona um pouco de espaço entre o texto e o botão */
-            transition: background-color 0.1s ease; /* Transição suave para a mudança de cor (0.5s) */
+            /* Remove a transição */
         }
         .btn:hover {
             background-color: #4e555b; /* Cor mais forte quando o botão é sobreposto */
         }
         .btn.clicked {
             background-color: #5a6268; /* Cor mais forte quando o botão é clicado */
-            transition: background-color 0.1s ease; /* Transição suave de 0.5s para a cor original */
-        }
-        .btn.transitioning {
-            transition: background-color 0.1s ease; /* Transição suave de 0.5s para a cor original */
         }
     </style>
 </head>
@@ -68,14 +64,18 @@
 
             try {
                 document.execCommand('copy');
-                // Adiciona classe para mudança de cor
+
+                // Modifica o texto do botão e altera a cor
                 const btn = document.querySelector('.btn');
-                btn.classList.add('clicked', 'transitioning');
+                btn.textContent = 'Copiado';
+                btn.classList.add('clicked');
                 
-                // Remove a classe após 0.5 segundos
+                // Remove a classe e restaura o texto após 3 segundos
                 setTimeout(() => {
-                    btn.classList.remove('clicked', 'transitioning');
-                }, 500); // Duração da transição de 0.5 segundos
+                    btn.classList.remove('clicked');
+                    btn.textContent = 'Copiar';
+                }, 3000); // Tempo para exibir "Copiado" (3 segundos)
+                
             } catch (err) {
                 console.error('Falha ao copiar: ', err);
             }
