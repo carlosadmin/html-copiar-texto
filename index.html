@@ -3,53 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Copiar Texto</title>
+    <title>Copiar Variáveis</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        .info-container {
-            display: inline-block; /* Mantém o conteúdo alinhado à esquerda */
-            margin-bottom: 10px; /* Adiciona um pequeno espaço abaixo do texto */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
         }
         .info {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
-        .texto2 {
-            font-size: 1.25rem; /* Fonte um pouco maior */
+        .info p {
+            margin: 0;
+            padding: 0;
+        }
+        .info #info1 {
+            margin-bottom: 20px; /* Espaço entre o texto 1 e o texto 2 */
+        }
+        .info #info2 {
+            font-size: 1.2rem; /* Texto um pouco maior */
             font-weight: bold; /* Texto em negrito */
         }
         .btn {
-            padding: 8px 16px;
-            background-color: #6c757d; /* Cor original do botão */
+            display: block; /* Faz o botão ocupar toda a largura possível */
+            margin-top: 10px; /* Espaço entre o texto em negrito e o botão */
+            padding: 5px 10px;
+            background-color: #6c757d;
             color: #fff;
             border: none;
             border-radius: 3px;
             cursor: pointer;
-            font-size: 1rem;
-            margin-top: 10px; /* Adiciona um pouco de espaço entre o texto e o botão */
-            /* Remove a transição */
+            font-size: 0.875rem;
         }
         .btn:hover {
-            background-color: #4e555b; /* Cor mais forte quando o botão é sobreposto */
-        }
-        .btn.clicked {
-            background-color: #5a6268; /* Cor mais forte quando o botão é clicado */
+            background-color: #5a6268; /* Cor ao passar o mouse */
         }
     </style>
 </head>
 <body>
-    <div class="info-container">
+    <div class="container">
         <div class="info">
             <p id="info1"></p>
-            <button class="btn" onclick="copiarParaAreaTransferencia('info2')">Copiar</button>
         </div>
         <div class="info">
-            <p id="info2" class="texto2"></p>
+            <p id="info2"></p>
+            <button class="btn" id="copyBtn" onclick="copiarParaAreaTransferencia('info2')">Copiar</button>
         </div>
     </div>
-
     <script>
         // Função para obter parâmetros da URL
         function getParameterByName(name) {
@@ -60,17 +64,19 @@
 
         // Função para preencher o conteúdo com os parâmetros da URL
         function preencherInformacoes() {
-            const valor1 = getParameterByName('texto1');
-            const valor2 = getParameterByName('texto2');
-            if (valor1) {
-                document.getElementById('info1').textContent = valor1;
-            }
-            if (valor2) {
-                document.getElementById('info2').textContent = valor2;
+            const informacoes = {
+                'info1': getParameterByName('texto1'),
+                'info2': getParameterByName('texto2')
+            };
+
+            for (const [id, valor] of Object.entries(informacoes)) {
+                if (valor) {
+                    document.getElementById(id).textContent = valor;
+                }
             }
         }
 
-        // Função para copiar o conteúdo do segundo texto para a área de transferência
+        // Função para copiar o conteúdo para a área de transferência
         function copiarParaAreaTransferencia(id) {
             const elemento = document.getElementById(id);
             const range = document.createRange();
@@ -80,18 +86,11 @@
 
             try {
                 document.execCommand('copy');
-
-                // Modifica o texto do botão e altera a cor
-                const btn = document.querySelector('.btn');
-                btn.textContent = 'Copiado';
-                btn.classList.add('clicked');
-                
-                // Remove a classe e restaura o texto após 3 segundos
+                const button = document.getElementById('copyBtn');
+                button.textContent = 'Copiado';
                 setTimeout(() => {
-                    btn.classList.remove('clicked');
-                    btn.textContent = 'Copiar';
-                }, 2000); // Tempo para exibir "Copiado" (2 segundos)
-                
+                    button.textContent = 'Copiar';
+                }, 3000); // Muda o texto de volta após 3 segundos
             } catch (err) {
                 console.error('Falha ao copiar: ', err);
             }
